@@ -1,15 +1,15 @@
 import React, { Component } from "react";
 
 import { withRouter } from "react-router-dom";
-// import { Route, Switch, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { WrapRoot } from "./style";
+
 import PropTypes from "prop-types";
 import { changeRole } from "./store/actions";
 
-// import Login from "./pages/login";
-import BaseView from "./components/baseCont";
-import LoginView from "./components/loginCont";
+import MainView from "./routes/mainView";
+import LoginView from "./routes/loginView";
+// import { Route, Switch, Redirect } from "react-router-dom";
+// import { loginRoutes } from "./routes";
 
 class App extends Component {
   constructor(props) {
@@ -19,20 +19,23 @@ class App extends Component {
   static propTypes = {
     role: PropTypes.string.isRequired
   };
-
+  componentDidMount() {
+    console.log(this.props.match);
+    console.log(this.props);
+  }
   render() {
     const { role, login } = this.props;
 
     return (
-      <WrapRoot>
+      <React.Fragment>
         {!role ? (
           // 登录前的 页面路由
           <LoginView />
         ) : (
           // 登录后的 路由页面
-          <BaseView role={role} clearRole={login} />
+          <MainView role={role} clearRole={login} />
         )}
-      </WrapRoot>
+      </React.Fragment>
     );
   }
 }
